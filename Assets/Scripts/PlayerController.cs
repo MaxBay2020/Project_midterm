@@ -184,6 +184,8 @@ public class PlayerController : MonoBehaviour
                 openText.DOFade(0, 0.8f);
                 StartCoroutine(VanishAfterSeconds(1f, openText.gameObject));
 
+                Destroy(arrow.gameObject);
+
                 //open chest
                 chest.GetComponent<SpriteRenderer>().sprite = chestOpenSprite;
                 spawnStart = true;
