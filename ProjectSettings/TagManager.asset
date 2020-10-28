@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - spaceTipTrigger
+  - wasdTipTrigger
+  - spaceTipGone
+  - arrowShowTrigger
   layers:
   - Default
   - TransparentFX
