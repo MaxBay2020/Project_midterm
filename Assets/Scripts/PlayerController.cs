@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+
 
 
 public class PlayerController : MonoBehaviour
@@ -27,6 +27,13 @@ public class PlayerController : MonoBehaviour
 
     //arrow
     public Transform arrow;
+    public GameObject chest;
+    public Sprite chestOpenSprite;
+    public GameObject starPrefab;
+    private bool spawnStart;
+
+    private float currentTime;
+    private float endTime = 0.05f;
 
     private void Start()
     {
@@ -65,6 +72,22 @@ public class PlayerController : MonoBehaviour
         //        anim.SetBool("composite", true);
         //    }
         //}
+
+        if (spawnStart && currentTime>endTime)
+        {
+            //spawn starts
+            
+            float x = UnityEngine.Random.Range(-400, 400);
+            float y = UnityEngine.Random.Range(500, 600);
+            GameObject star = Instantiate(starPrefab, chest.transform.position, Quaternion.identity);
+            star.GetComponent<Rigidbody2D>().AddForce(new Vector2(x, y));
+            Destroy(star, 0.8f);
+            currentTime = 0;
+        }
+        else
+        {
+            currentTime += Time.deltaTime;
+        }
 
         anim.SetFloat("xVelocity", Math.Abs(horiz));
         anim.SetBool("jump", Input.GetAxis("Jump") > 0);
@@ -153,14 +176,19 @@ public class PlayerController : MonoBehaviour
     /// <param name="collision"></param>
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "chestTrigger" && Input.GetKeyDown(KeyCode.E))
+        if (collision.gameObject.tag == "chestTrigger")
         {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                openText.DOKill();
+                openText.DOFade(0, 0.8f);
+                StartCoroutine(VanishAfterSeconds(1f, openText.gameObject));
 
-            Debug.Log(123);
-            openText.DOKill();
-            openText.DOFade(0, 0.8f);
-            StartCoroutine(VanishAfterSeconds(1f, openText.gameObject));
-
+                //open chest
+                chest.GetComponent<SpriteRenderer>().sprite = chestOpenSprite;
+                spawnStart = true;
+               
+            }
         }
     }
 }

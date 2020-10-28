@@ -8,6 +8,7 @@ TagManager:
   - wasdTipTrigger
   - spaceTipGone
   - arrowShowTrigger
+  - chestTrigger
   layers:
   - Default
   - TransparentFX
@@ -18,8 +19,8 @@ TagManager:
   - 
   - 
   - Ground
-  - 
-  - 
+  - Interaction
+  - Player
   - 
   - 
   - 
